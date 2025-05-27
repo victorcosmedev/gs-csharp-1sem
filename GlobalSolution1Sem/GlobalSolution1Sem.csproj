@@ -18,7 +18,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Application\Services\" />
     <Folder Include="Controllers\" />
+    <Folder Include="Infrastructure\Data\AppData\" />
   </ItemGroup>
 
 </Project>
