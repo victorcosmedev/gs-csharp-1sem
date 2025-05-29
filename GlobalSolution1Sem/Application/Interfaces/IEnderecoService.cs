@@ -1,14 +1,14 @@
-﻿using GlobalSolution1Sem.Domain.Entities;
+﻿using GlobalSolution1Sem.Application.Dto;
 
 namespace GlobalSolution1Sem.Application.Interfaces
 {
     public interface IEnderecoService
     {
-        Task<EnderecoEntity> CadastrarEnderecoAsync(EnderecoEntity endereco);
-        Task<EnderecoEntity> AtualizarEnderecoAsync(EnderecoEntity endereco);
+        Task<EnderecoDto> CadastrarEnderecoAsync(EnderecoDto endereco);
+        Task<EnderecoDto> AtualizarEnderecoAsync(EnderecoDto endereco);
         Task<bool> RemoverEnderecoAsync(string cep, string numero);
-        Task<EnderecoEntity> ObterEnderecoPorCepNumeroAsync(string cep, string numero);
-        Task<IEnumerable<EnderecoEntity>> ListarTodosEnderecosAsync();
-        Task<IEnumerable<EnderecoEntity>> BuscarEnderecosPorLogradouroAsync(string logradouro);
+        Task<EnderecoDto?> ObterEnderecoPorCepNumeroAsync(string cep, string numero);
+        Task<EnderecoDto?> BuscarEnderecoPorIdAsync(int id);
+        Task<IEnumerable<EnderecoDto>> ListarTodosEnderecosAsync();
     }
 }

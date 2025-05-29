@@ -1,14 +1,14 @@
-﻿using GlobalSolution1Sem.Domain.Entities;
+﻿using GlobalSolution1Sem.Application.Dto;
 
 namespace GlobalSolution1Sem.Application.Interfaces
 {
     public interface IPostService
     {
-        Task<PostEntity> CriarPostAsync(PostEntity post);
-        Task<PostEntity> AtualizarPostAsync(PostEntity post);
+        Task<PostDto> CriarPostAsync(PostDto post);
+        Task<PostDto> AtualizarPostAsync(PostDto post);
         Task<bool> RemoverPostAsync(string titulo);
-        Task<PostEntity> ObterPostPorTituloAsync(string titulo);
-        Task<IEnumerable<PostEntity>> ListarTodosPostsAsync();
-        Task<IEnumerable<PostEntity>> BuscarPostsPorDataAsync(DateTime data);
+        Task<IEnumerable<PostDto>> BuscarPorUsuarioIdAsync(int usuarioId);
+        Task<IEnumerable<PostDto>> ListarTodosPostsAsync();
+        Task<PostDto?> BuscarPorIdAsync(int id);
     }
 }

@@ -9,5 +9,6 @@ namespace GlobalSolution1Sem.Domain.Interfaces
         Task<bool> DeleteAsync(int id);
         Task<EnderecoEntity> GetByCepAndNumeroAsync(string cep, string numero);
         Task<EnderecoEntity?> GetByIdAsync(int id);
+        Task<IEnumerable<EnderecoEntity>> GetAllAsync();
     }
 }
