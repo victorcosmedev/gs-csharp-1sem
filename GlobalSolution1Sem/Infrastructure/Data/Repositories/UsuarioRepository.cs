@@ -1,43 +1,68 @@
 ﻿using GlobalSolution1Sem.Domain.Entities;
 using GlobalSolution1Sem.Domain.Interfaces;
+using GlobalSolution1Sem.Infrastructure.Data.AppData;
+using Microsoft.EntityFrameworkCore;
 
 namespace GlobalSolution1Sem.Infrastructure.Data.Repositories
 {
     public class UsuarioRepository : IUsuarioRepository
     {
-        public Task<UsuarioEntity> AddAsync(UsuarioEntity usuario)
+        private readonly ApplicationContext _context;
+
+        public UsuarioRepository(ApplicationContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
         }
 
-        public Task<bool> DeleteAsync(string cpf)
+        public async Task<UsuarioEntity> AddAsync(UsuarioEntity usuario)
         {
-            throw new NotImplementedException();
+            try
+            {
+                await _context.Usuario.AddAsync(usuario);
+                _context.SaveChanges();
+                return usuario;
+            } 
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
-        public Task<IEnumerable<UsuarioEntity>> GetAllAsync()
+        public async Task<bool> DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            var usuarioExistente = _context.Usuario.Find(id);
+            if (usuarioExistente == null)
+                throw new Exception("Usuário não existe na base de dados");
+            
+            _context.Usuario.Remove(usuarioExistente);
+            await _context.SaveChangesAsync();
+            return true;
         }
 
-        public Task<UsuarioEntity> GetByCpfAsync(string cpf)
+        public async Task<IEnumerable<UsuarioEntity>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return await _context.Usuario.ToListAsync();
         }
 
-        public Task<IEnumerable<UsuarioEntity>> GetByDataNascimentoAsync(DateTime data)
+        public Task<UsuarioEntity?> GetByCpfAsync(string cpf)
         {
-            throw new NotImplementedException();
+            return _context.Usuario.FirstOrDefaultAsync(x => x.Cpf == cpf);
         }
 
-        public Task<IEnumerable<UsuarioEntity>> GetByNomeAsync(string nome)
+        public async Task<UsuarioEntity> UpdateAsync(int id, UsuarioEntity usuario)
         {
-            throw new NotImplementedException();
-        }
+            if (id != usuario.Id)
+                throw new Exception("Não é possível alterar o Id do usuário");
 
-        public Task<UsuarioEntity> UpdateAsync(UsuarioEntity usuario)
-        {
-            throw new NotImplementedException();
+            var usuarioExistente = _context.Usuario.Find(id);
+            if (usuarioExistente == null)
+                throw new Exception($"Usuário de id {id} não existe.");
+
+            usuarioExistente.Nome = usuario.Nome;
+            usuarioExistente.Cpf = usuario.Cpf;
+            usuarioExistente.DataNascimento = usuario.DataNascimento;
+            await _context.SaveChangesAsync();
+            return usuarioExistente;
         }
     }
 }

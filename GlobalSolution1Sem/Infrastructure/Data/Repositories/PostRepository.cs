@@ -1,38 +1,66 @@
 ﻿using GlobalSolution1Sem.Domain.Entities;
 using GlobalSolution1Sem.Domain.Interfaces;
+using GlobalSolution1Sem.Infrastructure.Data.AppData;
+using Microsoft.EntityFrameworkCore;
 
 namespace GlobalSolution1Sem.Infrastructure.Data.Repositories
 {
     public class PostRepository : IPostRepository
     {
-        public Task<PostEntity> AddAsync(PostEntity post)
+        private readonly ApplicationContext _context;
+
+        public PostRepository(ApplicationContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
+        }
+        public async Task<PostEntity> AddAsync(PostEntity post)
+        {
+            try
+            {
+                await _context.Post.AddAsync(post);
+                _context.SaveChanges();
+                return post;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
-        public Task<bool> DeleteAsync(string titulo)
+        public async Task<bool> DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            var postExistente = _context.Usuario.Find(id);
+            if (postExistente == null)
+                throw new Exception("Post não existe na base de dados");
+
+            _context.Usuario.Remove(postExistente);
+            await _context.SaveChangesAsync();
+            return true;
         }
 
-        public Task<IEnumerable<PostEntity>> GetAllAsync()
+        public async Task<IEnumerable<PostEntity>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return await _context.Post.ToListAsync();
         }
 
-        public Task<IEnumerable<PostEntity>> GetByDataCriacaoAsync(DateTime data)
+        public async Task<IEnumerable<PostEntity>>? GetByUsuarioIdAsync(int usuarioId)
         {
-            throw new NotImplementedException();
+            return _context.Post.ToList().Where(p => p.UsuarioId == usuarioId);
         }
 
-        public Task<PostEntity> GetByTituloAsync(string titulo)
+        public async Task<PostEntity> UpdateAsync(int id, PostEntity post)
         {
-            throw new NotImplementedException();
-        }
+            if (id != post.Id)
+                throw new("Não é possível alterar o Id do post");
+            
+            var postExistente = await _context.Post.FindAsync(id);
+            if (postExistente == null)
+                throw new Exception($"Post de id {id} não existe.");
 
-        public Task<PostEntity> UpdateAsync(PostEntity post)
-        {
-            throw new NotImplementedException();
+            postExistente.Titulo = post.Titulo;
+            postExistente.Descricao = post.Descricao;
+            await _context.SaveChangesAsync();
+            return postExistente;
         }
     }
 }
