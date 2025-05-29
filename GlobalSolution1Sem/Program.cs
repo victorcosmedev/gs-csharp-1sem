@@ -1,5 +1,6 @@
 using GlobalSolution1Sem.Application.Interfaces;
 using GlobalSolution1Sem.Application.Services;
+using GlobalSolution1Sem.Configurations;
 using GlobalSolution1Sem.Domain.Interfaces;
 using GlobalSolution1Sem.Infrastructure.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -21,6 +22,8 @@ builder.Services.AddTransient<IUsuarioService, UsuarioService>();
 builder.Services.AddTransient<IUsuarioRepository, UsuarioRepository>();
 builder.Services.AddTransient<IEnderecoRepository, EnderecoRepository>();
 builder.Services.AddTransient<IPostRepository, PostRepository>();
+builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
+
 
 var app = builder.Build();
 

@@ -1,31 +1,42 @@
-﻿using GlobalSolution1Sem.Application.Interfaces;
+﻿using AutoMapper;
+using GlobalSolution1Sem.Application.Dto;
+using GlobalSolution1Sem.Application.Interfaces;
 using GlobalSolution1Sem.Domain.Entities;
+using GlobalSolution1Sem.Domain.Interfaces;
 
 namespace GlobalSolution1Sem.Application.Services
 {
     public class EnderecoService : IEnderecoService
     {
-        public Task<EnderecoEntity> AtualizarEnderecoAsync(EnderecoEntity endereco)
+        private readonly IEnderecoRepository _enderecoRepository;
+        private readonly IMapper _mapper;
+        public EnderecoService(IEnderecoRepository enderecoRepository, IMapper mapper)
+        {
+            _enderecoRepository = enderecoRepository;
+            _mapper = mapper;
+        }
+
+        public Task<EnderecoDto> AtualizarEnderecoAsync(EnderecoDto endereco)
         {
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<EnderecoEntity>> BuscarEnderecosPorLogradouroAsync(string logradouro)
+        public Task<EnderecoDto?> BuscarEnderecoPorIdAsync(int id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<EnderecoEntity> CadastrarEnderecoAsync(EnderecoEntity endereco)
+        public Task<EnderecoDto> CadastrarEnderecoAsync(EnderecoDto endereco)
         {
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<EnderecoEntity>> ListarTodosEnderecosAsync()
+        public Task<IEnumerable<EnderecoDto>> ListarTodosEnderecosAsync()
         {
             throw new NotImplementedException();
         }
 
-        public Task<EnderecoEntity> ObterEnderecoPorCepNumeroAsync(string cep, string numero)
+        public Task<EnderecoDto?> ObterEnderecoPorCepNumeroAsync(string cep, string numero)
         {
             throw new NotImplementedException();
         }
