@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GlobalSolution1Sem.Domain.Entities
 {
+    [Table("tb_cl_post")]
     public class PostEntity
     {
         [Key]

@@ -13,6 +13,7 @@ namespace GlobalSolution1Sem.Infrastructure.Data.Repositories
         {
             _context = context;
         }
+
         public async Task<PostEntity> AddAsync(PostEntity post)
         {
             try
@@ -29,11 +30,11 @@ namespace GlobalSolution1Sem.Infrastructure.Data.Repositories
 
         public async Task<bool> DeleteAsync(int id)
         {
-            var postExistente = _context.Usuario.Find(id);
+            var postExistente = await _context.Post.FindAsync(id);
             if (postExistente == null)
                 throw new Exception("Post não existe na base de dados");
 
-            _context.Usuario.Remove(postExistente);
+            _context.Post.Remove(postExistente);
             await _context.SaveChangesAsync();
             return true;
         }
@@ -41,6 +42,11 @@ namespace GlobalSolution1Sem.Infrastructure.Data.Repositories
         public async Task<IEnumerable<PostEntity>> GetAllAsync()
         {
             return await _context.Post.ToListAsync();
+        }
+
+        public async Task<PostEntity?> GetByIdAsync(int id)
+        {
+            return await _context.Post.FindAsync(id);
         }
 
         public async Task<IEnumerable<PostEntity>>? GetByUsuarioIdAsync(int usuarioId)

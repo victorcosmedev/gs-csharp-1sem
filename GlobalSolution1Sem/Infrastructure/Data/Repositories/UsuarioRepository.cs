@@ -49,6 +49,11 @@ namespace GlobalSolution1Sem.Infrastructure.Data.Repositories
             return _context.Usuario.FirstOrDefaultAsync(x => x.Cpf == cpf);
         }
 
+        public async Task<UsuarioEntity?> GetById(int id)
+        {
+            return await _context.Usuario.FindAsync(id);
+        }
+
         public async Task<UsuarioEntity> UpdateAsync(int id, UsuarioEntity usuario)
         {
             if (id != usuario.Id)

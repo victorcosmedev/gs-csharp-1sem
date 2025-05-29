@@ -1,18 +1,14 @@
-﻿using GlobalSolution1Sem.Domain.Entities;
+﻿using GlobalSolution1Sem.Application.Dto;
 
 namespace GlobalSolution1Sem.Application.Interfaces
 {
     public interface IUsuarioService
     {
-        Task<UsuarioEntity> CadastrarUsuarioAsync(UsuarioEntity usuario);
-        Task<UsuarioEntity> AtualizarUsuarioAsync(UsuarioEntity usuario);
+        Task<UsuarioDto> CadastrarUsuarioAsync(UsuarioDto dto);
+        Task<UsuarioDto> AtualizarUsuarioAsync(UsuarioDto dto);
         Task<bool> RemoverUsuarioAsync(string cpf);
-        Task<UsuarioEntity> ObterUsuarioPorCpfAsync(string cpf);
-        Task<IEnumerable<UsuarioEntity>> ListarTodosUsuariosAsync();
-        Task<IEnumerable<UsuarioEntity>> BuscarUsuariosPorNomeAsync(string nome);
-        Task<IEnumerable<UsuarioEntity>> FiltrarUsuariosPorDataNascimentoAsync(DateTime data);
-
-        // Método específico para vincular um endereço ao usuário
-        Task<UsuarioEntity> VincularEnderecoUsuarioAsync(string cpf, EnderecoEntity endereco);
+        Task<UsuarioDto?> ObterUsuarioPorCpfAsync(string cpf);
+        Task<IEnumerable<UsuarioDto>>? ListarTodosUsuariosAsync();
+        Task<UsuarioDto?> BuscarPorIdAsync(int id);
     }
 }

@@ -9,5 +9,6 @@ namespace GlobalSolution1Sem.Domain.Interfaces
         Task<bool> DeleteAsync(int id);
         Task<IEnumerable<PostEntity>> GetByUsuarioIdAsync(int usuarioId);
         Task<IEnumerable<PostEntity>> GetAllAsync();
+        Task<PostEntity?> GetByIdAsync(int id);
     }
 }

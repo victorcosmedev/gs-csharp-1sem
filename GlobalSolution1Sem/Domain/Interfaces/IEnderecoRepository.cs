@@ -6,8 +6,8 @@ namespace GlobalSolution1Sem.Domain.Interfaces
     {
         Task<EnderecoEntity> AddAsync(EnderecoEntity endereco);
         Task<EnderecoEntity> UpdateAsync(int id, EnderecoEntity endereco);
-        Task<bool> DeleteAsync(string cep, string numero);
+        Task<bool> DeleteAsync(int id);
         Task<EnderecoEntity> GetByCepAndNumeroAsync(string cep, string numero);
-        Task<EnderecoEntity?> GetByIdAsync(int id)
+        Task<EnderecoEntity?> GetByIdAsync(int id);
     }
 }

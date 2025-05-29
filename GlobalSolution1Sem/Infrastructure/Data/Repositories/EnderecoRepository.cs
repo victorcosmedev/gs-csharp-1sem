@@ -14,14 +14,33 @@ namespace GlobalSolution1Sem.Infrastructure.Data.Repositories
             _context = context;
         }
 
-        public Task<EnderecoEntity> AddAsync(EnderecoEntity endereco)
+        public async Task<EnderecoEntity> AddAsync(EnderecoEntity endereco)
         {
-            throw new NotImplementedException();
+            try
+            {
+                await _context.Endereco.AddAsync(endereco);
+                _context.SaveChanges();
+                return endereco;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
-        public Task<bool> DeleteAsync(string cep, string numero)
+        public async Task<bool> DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            var enderecoExistente = await _context.Endereco.FindAsync(id);
+            if (enderecoExistente == null)
+                throw new Exception("Endereço não existe na base de dados");
+
+            var usuario = await _context.Usuario.FindAsync(enderecoExistente.UsuarioId);
+            usuario.Endereco = null;
+            usuario.EnderecoId = null;
+
+            _context.Remove(enderecoExistente);
+            await _context.SaveChangesAsync();
+            return true;
         }
 
         public async Task<EnderecoEntity?> GetByCepAndNumeroAsync(string cep, string numero)
