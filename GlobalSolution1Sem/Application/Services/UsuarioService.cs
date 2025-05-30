@@ -17,14 +17,30 @@ namespace GlobalSolution1Sem.Application.Services
             _mapper = mapper;
         }
 
-        public Task<UsuarioDto> AtualizarUsuarioAsync(UsuarioDto dto)
+        public async Task<UsuarioDto> AtualizarUsuarioAsync(int id, UsuarioDto dto)
         {
-            throw new NotImplementedException();
+            try
+            {
+                if (dto.EnderecoId.HasValue && dto.EnderecoId > 0)
+                {
+                    var isEnderecoValid = await ValidarEnderecoIdAsync(id, (int)dto.EnderecoId);
+                    if (isEnderecoValid == false)
+                        throw new Exception("Para alterar o endereço do usuário, altere o usuarioId do endereço");
+                }
+                var entity = _mapper.Map<UsuarioEntity>(dto);
+
+
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
 
-        public Task<UsuarioDto?> BuscarPorIdAsync(int id)
+        public async Task<UsuarioDto?> BuscarPorIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var entity = await _usuarioRepository.GetById(id);
+            return _mapper.Map<UsuarioDto?>(entity);
         }
 
         public Task<UsuarioDto> CadastrarUsuarioAsync(UsuarioDto dto)
@@ -32,19 +48,37 @@ namespace GlobalSolution1Sem.Application.Services
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<UsuarioDto>>? ListarTodosUsuariosAsync()
+        public async Task<IEnumerable<UsuarioDto>>? ListarTodosUsuariosAsync()
         {
-            throw new NotImplementedException();
+            var entities = await _usuarioRepository.GetAllAsync();
+            var dtos = entities.Select(e => _mapper.Map<UsuarioDto>(e)).ToList();
+            return dtos;
         }
 
-        public Task<UsuarioDto?> ObterUsuarioPorCpfAsync(string cpf)
+        public async Task<UsuarioDto?> ObterUsuarioPorCpfAsync(string cpf)
         {
-            throw new NotImplementedException();
+            var entity = await _usuarioRepository.GetByCpfAsync(cpf);
+            return _mapper.Map<UsuarioDto?>(entity);
         }
 
-        public Task<bool> RemoverUsuarioAsync(string cpf)
+        public async Task<bool> RemoverUsuarioAsync(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return await _usuarioRepository.DeleteAsync(id);
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        private async Task<bool> ValidarEnderecoIdAsync(int usuarioId, int novoEnderecoId)
+        {
+            var usuario = await _usuarioRepository.GetById(usuarioId);
+            if (usuario.EnderecoId != novoEnderecoId)
+                return false;
+            return true;
         }
     }
 }

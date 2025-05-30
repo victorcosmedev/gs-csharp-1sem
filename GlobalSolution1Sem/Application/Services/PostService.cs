@@ -26,7 +26,7 @@ namespace GlobalSolution1Sem.Application.Services
             try
             {
                 var entity = _mapper.Map<PostEntity>(post);
-                var usuario = await AtribuirEValidarUsuarioAsync(post.UsuarioId, entity);
+                var usuario = await AtribuirEValidarUsuarioAsync(post.UsuarioId, entity.UsuarioId);
                 entity.Usuario = usuario;
 
                 entity = await _postRepository.UpdateAsync(id, entity);
