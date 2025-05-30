@@ -9,11 +9,13 @@ namespace GlobalSolution1Sem.Application.Services
     public class UsuarioService : IUsuarioService
     {
         private readonly IUsuarioRepository _usuarioRepository;
+        private readonly IEnderecoRepository _enderecoRepository;
         private readonly IMapper _mapper;
 
-        public UsuarioService(IUsuarioRepository usuarioRepository, IMapper mapper)
+        public UsuarioService(IUsuarioRepository usuarioRepository, IEnderecoRepository enderecoRepository, IMapper mapper)
         {
             _usuarioRepository = usuarioRepository;
+            _enderecoRepository = enderecoRepository;
             _mapper = mapper;
         }
 
@@ -21,19 +23,25 @@ namespace GlobalSolution1Sem.Application.Services
         {
             try
             {
+                var entity = _mapper.Map<UsuarioEntity>(dto);
                 if (dto.EnderecoId.HasValue && dto.EnderecoId > 0)
                 {
-                    var isEnderecoValid = await ValidarEnderecoIdAsync(id, (int)dto.EnderecoId);
-                    if (isEnderecoValid == false)
-                        throw new Exception("Para alterar o endereço do usuário, altere o usuarioId do endereço");
+                    var endereco = await AtribuirEValidarEnderecoIdAsync(id, (int)dto.EnderecoId);
+                    entity.EnderecoId = endereco.Id;
+                    entity.Endereco = endereco;
+                } else
+                {
+                    entity.Endereco = null;
+                    entity.EnderecoId = null;
                 }
-                var entity = _mapper.Map<UsuarioEntity>(dto);
 
-
+                entity = await _usuarioRepository.UpdateAsync(id, entity);
+                
+                return _mapper.Map<UsuarioDto>(entity);
             }
             catch (Exception ex)
             {
-
+                throw ex;
             }
         }
 
@@ -43,9 +51,29 @@ namespace GlobalSolution1Sem.Application.Services
             return _mapper.Map<UsuarioDto?>(entity);
         }
 
-        public Task<UsuarioDto> CadastrarUsuarioAsync(UsuarioDto dto)
+        public async Task<UsuarioDto> CadastrarUsuarioAsync(UsuarioDto dto)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var entity = _mapper.Map<UsuarioEntity>(dto);
+                if(dto.EnderecoId != 0 && dto.EnderecoId.HasValue)
+                {
+                    var endereco = await AtribuirEValidarEnderecoIdAsync(dto.Id, (int)dto.EnderecoId);
+                    entity.EnderecoId = endereco.Id;
+                    entity.Endereco = endereco;
+                } else
+                {
+                    entity.Endereco = null;
+                    entity.EnderecoId = null;
+                }
+
+                entity = await _usuarioRepository.AddAsync(entity);
+                return _mapper.Map<UsuarioDto>(entity);
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public async Task<IEnumerable<UsuarioDto>>? ListarTodosUsuariosAsync()
@@ -73,12 +101,13 @@ namespace GlobalSolution1Sem.Application.Services
             }
         }
 
-        private async Task<bool> ValidarEnderecoIdAsync(int usuarioId, int novoEnderecoId)
+        private async Task<EnderecoEntity?> AtribuirEValidarEnderecoIdAsync(int usuarioId, int novoEnderecoId)
         {
             var usuario = await _usuarioRepository.GetById(usuarioId);
             if (usuario.EnderecoId != novoEnderecoId)
-                return false;
-            return true;
+                throw new Exception("Para alterar o endereço do usuário, altere o usuarioId do endereço");
+
+            return await _enderecoRepository.GetByIdAsync(novoEnderecoId);
         }
     }
 }
