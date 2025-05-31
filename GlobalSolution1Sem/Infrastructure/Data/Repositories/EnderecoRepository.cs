@@ -43,6 +43,11 @@ namespace GlobalSolution1Sem.Infrastructure.Data.Repositories
             return true;
         }
 
+        public async Task<IEnumerable<EnderecoEntity>> GetAllAsync()
+        {
+            return await _context.Endereco.ToListAsync();
+        }
+
         public async Task<EnderecoEntity?> GetByCepAndNumeroAsync(string cep, string numero)
         {
             return await _context.Endereco.FirstOrDefaultAsync(e => e.Cep == cep && e.Numero == numero);
