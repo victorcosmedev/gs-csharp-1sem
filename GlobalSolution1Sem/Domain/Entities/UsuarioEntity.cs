@@ -11,8 +11,8 @@ namespace GlobalSolution1Sem.Domain.Entities
         public string Nome { get; set; }
         public string Cpf { get; set; }
         public DateTime DataNascimento { get; set; }
-        [ForeignKey(nameof(Endereco))]
         public int? EnderecoId { get; set; }
+        [InverseProperty("Usuario")]
         public virtual EnderecoEntity? Endereco { get; set; }
         public ICollection<PostEntity> Posts { get; set; }
     }
