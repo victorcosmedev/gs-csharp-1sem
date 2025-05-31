@@ -1,6 +1,10 @@
+
 # ClimaConecta API
 
 Este projeto consiste numa API RESTful para o  **ClimaConecta**, uma plataforma colaborativa que permite o registro, compartilhamento e monitoramento em tempo real de condições climáticas, como enchentes, secas e tempestades.
+### Links Complementares
+- **Vídeo Pitch:** https://youtu.be/Vy-Bq_2zqZw
+- **Vídeo Apresentação da Entrega:** https://youtu.be/tjpQUJCfUxw
 
 🔗  **Objetivo**: Facilitar a comunicação entre comunidades para alertas rápidos sobre eventos climáticos extremos.
 
