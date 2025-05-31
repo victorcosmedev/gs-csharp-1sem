@@ -35,7 +35,25 @@
         public const string ListarTodosPostsSummary = "Lista posts";
         public const string ListarTodosPostsDescription = "Retorna todos os posts cadastrados";
 
-        public const string BuscarPorIdSummary = "Busca post por ID";
-        public const string BuscarPorIdDescription = "Obtém detalhes de um post específico";
+        public const string BuscarPostPorIdSummary = "Busca post por ID";
+        public const string BuscarPostPorIdDescription = "Obtém detalhes de um post específico";
+
+        public const string CadastrarUsuarioSummary = "Cadastra usuário";
+        public const string CadastrarUsuarioDescription = "Cria um novo registro de usuário";
+
+        public const string AtualizarUsuarioSummary = "Atualiza usuário";
+        public const string AtualizarUsuarioDescription = "Edita informações de um usuário existente";
+
+        public const string RemoverUsuarioSummary = "Remove usuário";
+        public const string RemoverUsuarioDescription = "Exclui um usuário do sistema";
+
+        public const string ObterUsuarioPorCpfSummary = "Busca por CPF";
+        public const string ObterUsuarioPorCpfDescription = "Obtém usuário pelo número de CPF";
+
+        public const string ListarTodosUsuariosSummary = "Lista usuários";
+        public const string ListarTodosUsuariosDescription = "Retorna todos os usuários cadastrados";
+
+        public const string BuscarUsuarioPorIdSummary = "Busca por ID";
+        public const string BuscarUsuarioPorIdDescription = "Obtém usuário pelo ID";
     }
 }
