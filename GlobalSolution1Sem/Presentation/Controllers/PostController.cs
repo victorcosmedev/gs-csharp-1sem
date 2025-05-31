@@ -1,5 +1,6 @@
 ﻿using GlobalSolution1Sem.Application.Dto;
 using GlobalSolution1Sem.Application.Interfaces;
+using GlobalSolution1Sem.Utils;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -16,16 +17,25 @@ namespace GlobalSolution1Sem.Presentation.Controllers
         }
 
         [HttpPost]
-        [SwaggerOperation(Summary = "Cria um novo post")]
+        [SwaggerOperation(Summary = ApiDoc.CriarPostSummary, Description = ApiDoc.CriarPostDescription)]
         [SwaggerResponse(StatusCodes.Status201Created, "Post criado com sucesso", typeof(PostDto))]
         [SwaggerResponse(StatusCodes.Status400BadRequest, "Dados inválidos")]
         [SwaggerResponse(StatusCodes.Status500InternalServerError, "Erro interno no servidor")]
         public async Task<IActionResult> CriarPost([FromBody] PostDto post)
         {
+            if (!ModelState.IsValid)
+            {
+                var errors = ModelState.Values
+                    .SelectMany(v => v.Errors)
+                    .Select(e => e.ErrorMessage)
+                    .ToList();
+                return BadRequest(new { Errors = errors });
+            }
+
             try
             {
                 var postCriado = await _postService.CriarPostAsync(post);
-                return Ok(postCriado);
+                return CreatedAtAction(nameof(BuscarPorId), new { id = postCriado.Id }, postCriado);
             }
             catch (Exception ex)
             {
@@ -34,13 +44,22 @@ namespace GlobalSolution1Sem.Presentation.Controllers
         }
 
         [HttpPut("{id}")]
-        [SwaggerOperation(Summary = "Atualiza um post existente")]
+        [SwaggerOperation(Summary = ApiDoc.AtualizarPostSummary, Description = ApiDoc.AtualizarPostDescription)]
         [SwaggerResponse(StatusCodes.Status200OK, "Post atualizado com sucesso", typeof(PostDto))]
         [SwaggerResponse(StatusCodes.Status400BadRequest, "IDs inconsistentes ou dados inválidos")]
         [SwaggerResponse(StatusCodes.Status404NotFound, "Post não encontrado")]
         [SwaggerResponse(StatusCodes.Status500InternalServerError, "Erro interno no servidor")]
         public async Task<IActionResult> AtualizarPost(int id, [FromBody] PostDto post)
         {
+            if (!ModelState.IsValid)
+            {
+                var errors = ModelState.Values
+                    .SelectMany(v => v.Errors)
+                    .Select(e => e.ErrorMessage)
+                    .ToList();
+                return BadRequest(new { Errors = errors });
+            }
+
             try
             {
                 if (id != post.Id)
@@ -61,9 +80,8 @@ namespace GlobalSolution1Sem.Presentation.Controllers
             }
         }
 
-
         [HttpDelete("{id}")]
-        [SwaggerOperation(Summary = "Remove um post")]
+        [SwaggerOperation(Summary = ApiDoc.RemoverPostSummary, Description = ApiDoc.RemoverPostDescription)]
         [SwaggerResponse(StatusCodes.Status204NoContent, "Post removido com sucesso")]
         [SwaggerResponse(StatusCodes.Status404NotFound, "Post não encontrado")]
         [SwaggerResponse(StatusCodes.Status500InternalServerError, "Erro interno no servidor")]
@@ -85,7 +103,7 @@ namespace GlobalSolution1Sem.Presentation.Controllers
         }
 
         [HttpGet("por-usuario/{usuarioId}")]
-        [SwaggerOperation(Summary = "Lista posts por ID de usuário")]
+        [SwaggerOperation(Summary = ApiDoc.BuscarPorUsuarioIdSummary, Description = ApiDoc.BuscarPorUsuarioIdDescription)]
         [SwaggerResponse(StatusCodes.Status200OK, "Posts encontrados", typeof(IEnumerable<PostDto>))]
         [SwaggerResponse(StatusCodes.Status500InternalServerError, "Erro interno no servidor")]
         public async Task<IActionResult> BuscarPorUsuarioId(int usuarioId)
@@ -93,7 +111,7 @@ namespace GlobalSolution1Sem.Presentation.Controllers
             try
             {
                 var posts = await _postService.BuscarPorUsuarioIdAsync(usuarioId);
-                return Ok(posts);
+                return Ok(posts ?? new List<PostDto>());
             }
             catch (Exception ex)
             {
@@ -102,7 +120,7 @@ namespace GlobalSolution1Sem.Presentation.Controllers
         }
 
         [HttpGet]
-        [SwaggerOperation(Summary = "Lista todos os posts")]
+        [SwaggerOperation(Summary = ApiDoc.ListarTodosPostsSummary, Description = ApiDoc.ListarTodosPostsDescription)]
         [SwaggerResponse(StatusCodes.Status200OK, "Lista de posts retornada", typeof(IEnumerable<PostDto>))]
         [SwaggerResponse(StatusCodes.Status500InternalServerError, "Erro interno no servidor")]
         public async Task<IActionResult> ListarTodosPosts()
@@ -110,7 +128,7 @@ namespace GlobalSolution1Sem.Presentation.Controllers
             try
             {
                 var posts = await _postService.ListarTodosPostsAsync();
-                return Ok(posts);
+                return Ok(posts ?? new List<PostDto>());
             }
             catch (Exception ex)
             {
@@ -119,7 +137,7 @@ namespace GlobalSolution1Sem.Presentation.Controllers
         }
 
         [HttpGet("{id}")]
-        [SwaggerOperation(Summary = "Obtém um post por ID")]
+        [SwaggerOperation(Summary = ApiDoc.BuscarPorIdSummary, Description = ApiDoc.BuscarPorIdDescription)]
         [SwaggerResponse(StatusCodes.Status200OK, "Post encontrado", typeof(PostDto))]
         [SwaggerResponse(StatusCodes.Status404NotFound, "Post não encontrado")]
         [SwaggerResponse(StatusCodes.Status500InternalServerError, "Erro interno no servidor")]

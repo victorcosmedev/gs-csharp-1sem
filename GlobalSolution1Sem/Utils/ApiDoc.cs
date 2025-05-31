@@ -19,5 +19,23 @@
 
         public const string ListarTodosEnderecosSummary = "Lista todos os endereços";
         public const string ListarTodosEnderecosDescription = "Retorna uma lista paginada com todos os endereços cadastrados no sistema.";
+
+        public const string CriarPostSummary = "Cria novo post";
+        public const string CriarPostDescription = "Registra um novo post no sistema";
+
+        public const string AtualizarPostSummary = "Atualiza post";
+        public const string AtualizarPostDescription = "Edita um post existente";
+
+        public const string RemoverPostSummary = "Remove post";
+        public const string RemoverPostDescription = "Exclui permanentemente um post";
+
+        public const string BuscarPorUsuarioIdSummary = "Posts por usuário";
+        public const string BuscarPorUsuarioIdDescription = "Lista todos os posts de um usuário";
+
+        public const string ListarTodosPostsSummary = "Lista posts";
+        public const string ListarTodosPostsDescription = "Retorna todos os posts cadastrados";
+
+        public const string BuscarPorIdSummary = "Busca post por ID";
+        public const string BuscarPorIdDescription = "Obtém detalhes de um post específico";
     }
 }
