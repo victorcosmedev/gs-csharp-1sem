@@ -19,6 +19,13 @@ namespace GlobalSolution1Sem.Infrastructure.Data.Repositories
             try
             {
                 await _context.Endereco.AddAsync(endereco);
+
+                _context.SaveChanges();
+                var usuario = await _context.Usuario.FindAsync(endereco.UsuarioId);
+
+                usuario.EnderecoId = endereco.Id;
+                usuario.Endereco = endereco;
+
                 _context.SaveChanges();
                 return endereco;
             }

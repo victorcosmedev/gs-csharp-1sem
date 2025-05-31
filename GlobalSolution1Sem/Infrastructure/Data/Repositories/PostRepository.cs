@@ -19,6 +19,10 @@ namespace GlobalSolution1Sem.Infrastructure.Data.Repositories
             try
             {
                 await _context.Post.AddAsync(post);
+                var usuario = await _context.Usuario.FindAsync(post.UsuarioId);
+                _context.SaveChanges();
+
+                usuario.Posts.Add(post);
                 _context.SaveChanges();
                 return post;
             }

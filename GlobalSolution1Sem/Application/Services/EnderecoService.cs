@@ -93,7 +93,7 @@ namespace GlobalSolution1Sem.Application.Services
             if (usuario == null)
                 throw new Exception("Usuário não existe");
 
-            if (usuario.EnderecoId != entity.Id)
+            if (usuario.EnderecoId > 0 && usuario.EnderecoId != entity.Id)
                 throw new Exception("Usuário já está cadastrado num endereço");
 
             return usuario;

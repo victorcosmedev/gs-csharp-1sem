@@ -39,7 +39,7 @@ namespace GlobalSolution1Sem.Presentation.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, "Ocorreu um erro ao cadastrar o endereço");
+                return BadRequest(ex.Message);
             }
         }
 
