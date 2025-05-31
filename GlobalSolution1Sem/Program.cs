@@ -24,6 +24,11 @@ builder.Services.AddTransient<IEnderecoRepository, EnderecoRepository>();
 builder.Services.AddTransient<IPostRepository, PostRepository>();
 builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 
+builder.Services.AddSwaggerGen(conf => {
+
+    conf.EnableAnnotations();
+});
+
 
 var app = builder.Build();
 
