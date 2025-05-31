@@ -137,7 +137,7 @@ namespace GlobalSolution1Sem.Presentation.Controllers
         }
 
         [HttpGet("{id}")]
-        [SwaggerOperation(Summary = ApiDoc.BuscarPorIdSummary, Description = ApiDoc.BuscarPorIdDescription)]
+        [SwaggerOperation(Summary = ApiDoc.BuscarUsuarioPorIdSummary, Description = ApiDoc.BuscarUsuarioPorIdDescription)]
         [SwaggerResponse(StatusCodes.Status200OK, "Post encontrado", typeof(PostDto))]
         [SwaggerResponse(StatusCodes.Status404NotFound, "Post não encontrado")]
         [SwaggerResponse(StatusCodes.Status500InternalServerError, "Erro interno no servidor")]
