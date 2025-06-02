@@ -12,7 +12,7 @@ namespace GlobalSolution1Sem.Application.Dto
         [Required(ErrorMessage = "Número é obrigatório.")]
         public string Numero { get; set; }
         [Required(ErrorMessage = "CEP é obrigatório.")]
-        [StringLength(8, MinimumLength = 8, ErrorMessage = "")]
+        [StringLength(8, MinimumLength = 8, ErrorMessage = "CEP precisa ter 8 caracteres.")]
         public string Cep { get; set; }
         [Required(ErrorMessage = "Complemento é obrigatório.")]
         [StringLength(200, MinimumLength = 3)]
