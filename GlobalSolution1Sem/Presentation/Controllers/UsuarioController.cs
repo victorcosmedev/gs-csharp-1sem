@@ -36,7 +36,7 @@ namespace GlobalSolution1Sem.Presentation.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, "Erro ao cadastrar usuário");
+                return BadRequest(ex.Message);
             }
         }
 
@@ -83,7 +83,7 @@ namespace GlobalSolution1Sem.Presentation.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, "Erro ao remover usuário");
+                return BadRequest(ex.Message);
             }
         }
 
@@ -100,8 +100,8 @@ namespace GlobalSolution1Sem.Presentation.Controllers
                 return usuario != null ? Ok(usuario) : NotFound();
             }
             catch (Exception ex)
-            {
-                return StatusCode(500, "Erro ao buscar usuário");
+            {   
+                return BadRequest(ex.Message);
             }
         }
 
@@ -118,7 +118,7 @@ namespace GlobalSolution1Sem.Presentation.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, "Erro ao listar usuários");
+                return BadRequest(ex.Message);
             }
         }
 
@@ -136,7 +136,7 @@ namespace GlobalSolution1Sem.Presentation.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, "Erro ao buscar usuário");
+                return BadRequest(ex.Message);
             }
         }
     }

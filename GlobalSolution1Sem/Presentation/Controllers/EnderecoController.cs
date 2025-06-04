@@ -48,7 +48,6 @@ namespace GlobalSolution1Sem.Presentation.Controllers
         [SwaggerResponse(StatusCodes.Status200OK, "Endereço atualizado com sucesso", typeof(EnderecoDto))]
         [SwaggerResponse(StatusCodes.Status400BadRequest, "IDs inconsistentes ou dados inválidos")]
         [SwaggerResponse(StatusCodes.Status404NotFound, "Endereço não encontrado")]
-        [SwaggerResponse(StatusCodes.Status500InternalServerError, "Erro interno no servidor")]
         public async Task<IActionResult> AtualizarEndereco(int id, [FromBody] EnderecoDto endereco)
         {
             if (!ModelState.IsValid)
@@ -72,7 +71,7 @@ namespace GlobalSolution1Sem.Presentation.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, "Ocorreu um erro ao atualizar o endereço");
+                return BadRequest(ex.Message);
             }
         }
 
@@ -80,7 +79,6 @@ namespace GlobalSolution1Sem.Presentation.Controllers
         [SwaggerOperation(Summary = ApiDoc.RemoverEnderecoSummary, Description = ApiDoc.RemoverEnderecoDescription)]
         [SwaggerResponse(StatusCodes.Status204NoContent, "Endereço removido com sucesso")]
         [SwaggerResponse(StatusCodes.Status404NotFound, "Endereço não encontrado")]
-        [SwaggerResponse(StatusCodes.Status500InternalServerError, "Erro interno no servidor")]
         public async Task<IActionResult> RemoverEndereco(int id)
         {
             try
@@ -94,7 +92,7 @@ namespace GlobalSolution1Sem.Presentation.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, "Ocorreu um erro ao remover o endereço");
+                return BadRequest(ex.Message);
             }
         }
 
@@ -116,7 +114,7 @@ namespace GlobalSolution1Sem.Presentation.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, "Ocorreu um erro ao buscar o endereço");
+                return BadRequest(ex.Message);
             }
         }
 
@@ -149,7 +147,7 @@ namespace GlobalSolution1Sem.Presentation.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, "Ocorreu um erro ao buscar o endereço");
+                return BadRequest(ex.Message);
             }
         }
 
@@ -166,7 +164,7 @@ namespace GlobalSolution1Sem.Presentation.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, "Ocorreu um erro ao listar os endereços");
+                return BadRequest(ex.Message);
             }
         }
     }

@@ -39,7 +39,7 @@ namespace GlobalSolution1Sem.Presentation.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, "Ocorreu um erro ao criar o post");
+                return BadRequest(ex.Message);
             }
         }
 
@@ -76,7 +76,7 @@ namespace GlobalSolution1Sem.Presentation.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, "Ocorreu um erro ao atualizar o post");
+                return BadRequest(ex.Message);
             }
         }
 
@@ -98,7 +98,7 @@ namespace GlobalSolution1Sem.Presentation.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, "Ocorreu um erro ao remover o post");
+                return BadRequest(ex.Message);
             }
         }
 
@@ -115,7 +115,7 @@ namespace GlobalSolution1Sem.Presentation.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, "Ocorreu um erro ao buscar os posts");
+                return BadRequest(ex.Message);
             }
         }
 
@@ -132,7 +132,7 @@ namespace GlobalSolution1Sem.Presentation.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, "Ocorreu um erro ao listar os posts");
+                return BadRequest(ex.Message);
             }
         }
 
@@ -154,7 +154,7 @@ namespace GlobalSolution1Sem.Presentation.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, "Ocorreu um erro ao buscar o post");
+                return BadRequest(ex.Message);
             }
         }
     }
