@@ -1,4 +1,5 @@
 
+
   
 
 # ClimaConecta API
@@ -52,6 +53,57 @@ Após inserir as credenciais, deve-se abrir o Packet Manager Console (Tools > Nu
 #### Rodar o projeto
 
 Feito isso, basta inicializar o projeto via **HTTP** (não HTTPS) e o Swagger da API será aberto automaticamente. Caso isso não ocorra, ele pode ser acessado através da URL `http://localhost:5045/swagger/index.html`.
+
+## Estrutura do Projeto
+```
+Application/
+├── Dto/
+│   ├── EnderecoDto.cs
+│   ├── PostDto.cs
+│   └── UsuarioDto.cs
+├── Interfaces/
+│   ├── IEnderecoService.cs
+│   ├── IPostService.cs
+│   └── IUsuarioService.cs
+└── Services/
+    ├── EnderecoService.cs
+    ├── PostService.cs
+    └── UsuarioService.cs
+
+Configurations/
+└── AutoMapperProfile.cs
+
+Domain/
+├── Entities/
+│   ├── EnderecoEntity.cs
+│   ├── PostEntity.cs
+│   └── UsuarioEntity.cs
+└── Interfaces/
+    ├── IEnderecoRepository.cs
+    ├── IPostRepository.cs
+    └── IUsuarioRepository.cs
+
+Infrastructure/
+└── Data/
+    ├── AppData/
+    │   └── ApplicationContext.cs
+    ├── Migrations/
+    │   ├── 20250513031925_initdb.cs
+    │   └── ApplicationContextModelSnapshot.cs
+    └── Repositories/
+        ├── EnderecoRepository.cs
+        ├── PostRepository.cs
+        └── UsuarioRepository.cs
+
+Presentation/
+└── Controllers/
+    ├── EnderecoController.cs
+    ├── PostController.cs
+    └── UsuarioController.cs
+
+Utils/
+└── ApiDoc.cs
+```
 
 ## Roteiro de Testes - Criação e Atualização
 Para testes, sugiro utilizar estes objetos:
